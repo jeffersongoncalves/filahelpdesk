@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Observers\UserObserver;
+use App\Observers\AgentObserver;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Panel;
@@ -16,7 +16,6 @@ use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
@@ -38,28 +37,28 @@ use Illuminate\Support\Facades\Storage;
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  *
- * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereAvatarUrl($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCustomFields($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmailVerifiedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereLocale($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRememberToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereThemeColor($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
+ * @method static \Database\Factories\AgentFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Agent newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Agent newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Agent query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Agent whereAvatarUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Agent whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Agent whereCustomFields($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Agent whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Agent whereEmailVerifiedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Agent whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Agent whereLocale($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Agent whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Agent wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Agent whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Agent whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Agent whereThemeColor($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Agent whereUpdatedAt($value)
  *
  * @mixin \Eloquent
  */
-#[ObservedBy(UserObserver::class)]
-class User extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract, FilamentUser, HasAvatar, MustVerifyEmailContract
+#[ObservedBy(AgentObserver::class)]
+class Agent extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract, FilamentUser, HasAvatar, MustVerifyEmailContract
 {
     use Authenticatable;
     use Authorizable;
@@ -84,27 +83,17 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'remember_token',
     ];
 
-    public function categories(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class)
-            ->using(CategoryUser::class);
-    }
-
-    /**
-     * @throws \Exception
-     */
     public function canAccessPanel(Panel $panel): bool
     {
-        if ($panel->getId() === 'admin') {
+        if ($panel->getId() === 'agent') {
             return false;
         }
-
         return true;
     }
 
     public function canImpersonate(): bool
     {
-        return false;
+        return true;
     }
 
     public function getFilamentAvatarUrl(): ?string

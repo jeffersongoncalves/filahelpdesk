@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Admin;
+use App\Models\Agent;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -21,6 +22,13 @@ class DatabaseSeeder extends Seeder
             User::factory()->create([
                 'name' => 'Test User',
                 'email' => 'user@filakit.com',
+            ]);
+        }
+
+        if (Agent::query()->where('email', 'agent@filakit.com')->count() == 0) {
+            Agent::factory()->create([
+                'name' => 'Test Agent',
+                'email' => 'agent@filakit.com',
             ]);
         }
 
