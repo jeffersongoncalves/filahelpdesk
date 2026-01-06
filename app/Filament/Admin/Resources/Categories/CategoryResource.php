@@ -5,9 +5,7 @@ namespace App\Filament\Admin\Resources\Categories;
 use App\Filament\Admin\Resources\Categories\Pages\ManageCategories;
 use App\Models\Category;
 use BackedEnum;
-use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Forms\Components\ColorPicker;
@@ -20,14 +18,52 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\ColorColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Cache;
 
 class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::Tag;
+
+    protected static bool $isGloballySearchable = true;
 
     protected static ?string $recordTitleAttribute = 'name';
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name'];
+    }
+
+    public static function getGlobalSearchResultUrl($record): string
+    {
+        return self::getUrl('index', ['tableAction' => 'view', 'tableActionRecord' => $record]);
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('Category');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Categories');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('Categories');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Helpdesk');
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return (string)Cache::rememberForever('categories_count', fn() => Category::query()->count());
+    }
 
     public static function form(Schema $schema): Schema
     {
@@ -58,8 +94,7 @@ class CategoryResource extends Resource
             ->columns([
                 TextColumn::make('name')
                     ->searchable(),
-                ColorColumn::make('color')
-                    ->searchable(),
+                ColorColumn::make('color'),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -76,11 +111,6 @@ class CategoryResource extends Resource
                 ViewAction::make(),
                 EditAction::make(),
                 DeleteAction::make(),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
             ]);
     }
 

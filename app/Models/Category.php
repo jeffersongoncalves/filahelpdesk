@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Observers\CategoryObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+#[ObservedBy(CategoryObserver::class)]
 class Category extends Model
 {
     protected $fillable = [
@@ -12,9 +15,9 @@ class Category extends Model
         'color',
     ];
 
-    public function users(): BelongsToMany
+    public function agents(): BelongsToMany
     {
-        return $this->belongsToMany(User::class)
-            ->using(CategoryUser::class);
+        return $this->belongsToMany(Agent::class)
+            ->using(AgentCategory::class);
     }
 }

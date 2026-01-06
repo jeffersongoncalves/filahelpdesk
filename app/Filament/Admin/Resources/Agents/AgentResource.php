@@ -56,7 +56,7 @@ class AgentResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('Agent');
+        return __('Helpdesk');
     }
 
     public static function getNavigationBadge(): ?string

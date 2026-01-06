@@ -5,9 +5,7 @@ namespace App\Filament\Admin\Resources\Statuses;
 use App\Filament\Admin\Resources\Statuses\Pages\ManageStatuses;
 use App\Models\Status;
 use BackedEnum;
-use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Forms\Components\ColorPicker;
@@ -20,14 +18,52 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\ColorColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Cache;
 
 class StatusResource extends Resource
 {
     protected static ?string $model = Status::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::RectangleGroup;
+
+    protected static bool $isGloballySearchable = true;
 
     protected static ?string $recordTitleAttribute = 'name';
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name'];
+    }
+
+    public static function getGlobalSearchResultUrl($record): string
+    {
+        return self::getUrl('index', ['tableAction' => 'view', 'tableActionRecord' => $record]);
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('Status');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Statuses');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('Statuses');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Helpdesk');
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return (string)Cache::rememberForever('statuses_count', fn() => Status::query()->count());
+    }
 
     public static function form(Schema $schema): Schema
     {

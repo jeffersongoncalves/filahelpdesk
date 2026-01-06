@@ -68,6 +68,7 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->navigationGroups([
+                __('Helpdesk'),
                 __('User'),
                 __('Management'),
                 __('Settings'),
