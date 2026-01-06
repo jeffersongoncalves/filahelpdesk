@@ -11,7 +11,7 @@ return [
     'defaultNumberLocale' => null,
     'defaultTimeDisplayFormat' => 'H:i:s',
     'defaultIsoTimeDisplayFormat' => 'LT',
-    'theme_mode' => ThemeMode::Light,
+    'theme_mode' => ThemeMode::Dark,
     'guest_panel_enabled' => true,
     'admin_panel_enabled' => true,
     'app_panel_enabled' => true,

@@ -1,7 +1,10 @@
-name: filakitv4
-php: '8.4'
+name: filahelpdesk
+php: '8.2'
 secured: true
 aliases: {  }
-services: {  }
+services:
+    mariadb:
+        version: '10.11'
+        port: '3306'
 integrations:
     forge: {  }
