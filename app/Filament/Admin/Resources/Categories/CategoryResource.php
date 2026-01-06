@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Admin\Resources\Statuses;
+namespace App\Filament\Admin\Resources\Categories;
 
-use App\Filament\Admin\Resources\Statuses\Pages\ManageStatuses;
-use App\Models\Status;
+use App\Filament\Admin\Resources\Categories\Pages\ManageCategories;
+use App\Models\Category;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -21,9 +21,9 @@ use Filament\Tables\Columns\ColorColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class StatusResource extends Resource
+class CategoryResource extends Resource
 {
-    protected static ?string $model = Status::class;
+    protected static ?string $model = Category::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
@@ -58,7 +58,8 @@ class StatusResource extends Resource
             ->columns([
                 TextColumn::make('name')
                     ->searchable(),
-                ColorColumn::make('color'),
+                ColorColumn::make('color')
+                    ->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -75,13 +76,18 @@ class StatusResource extends Resource
                 ViewAction::make(),
                 EditAction::make(),
                 DeleteAction::make(),
+            ])
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                ]),
             ]);
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => ManageStatuses::route('/'),
+            'index' => ManageCategories::route('/'),
         ];
     }
 }

@@ -48,12 +48,6 @@ class PriorityResource extends Resource
             ->components([
                 TextEntry::make('name'),
                 ColorEntry::make('color'),
-                TextEntry::make('created_at')
-                    ->dateTime()
-                    ->placeholder('-'),
-                TextEntry::make('updated_at')
-                    ->dateTime()
-                    ->placeholder('-'),
             ]);
     }
 
