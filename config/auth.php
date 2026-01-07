@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Admin;
+use App\Models\Agent;
 use App\Models\User;
 
 return [
@@ -47,6 +48,10 @@ return [
             'driver' => 'session',
             'provider' => 'admins',
         ],
+        'agent' => [
+            'driver' => 'session',
+            'provider' => 'agents',
+        ],
     ],
 
     /*
@@ -86,6 +91,16 @@ return [
         //     'driver' => 'database',
         //     'table' => 'admins',
         // ],
+
+        'agents' => [
+            'driver' => 'eloquent',
+            'model' => Agent::class,
+        ],
+
+        // 'agents' => [
+        //     'driver' => 'database',
+        //     'table' => 'agents',
+        // ],
     ],
 
     /*
@@ -116,6 +131,12 @@ return [
         ],
         'admins' => [
             'provider' => 'admins',
+            'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'agents' => [
+            'provider' => 'agents',
             'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
             'expire' => 60,
             'throttle' => 60,

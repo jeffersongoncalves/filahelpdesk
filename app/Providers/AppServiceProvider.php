@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Providers\Filament\AdminPanelProvider;
+use App\Providers\Filament\AgentPanelProvider;
 use App\Providers\Filament\AppPanelProvider;
 use App\Providers\Filament\GuestPanelProvider;
 use Filament\Actions;
@@ -34,6 +35,9 @@ class AppServiceProvider extends ServiceProvider
     {
         if (config('filakit.admin_panel_enabled', false)) {
             $this->app->register(AdminPanelProvider::class);
+        }
+        if (config('filakit.agent_panel_enabled', false)) {
+            $this->app->register(AgentPanelProvider::class);
         }
         if (config('filakit.app_panel_enabled', false)) {
             $this->app->register(AppPanelProvider::class);
