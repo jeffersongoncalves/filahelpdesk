@@ -91,6 +91,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         if ($panel->getId() === 'admin') {
             return false;
         }
+        if ($panel->getId() === 'agent') {
+            return false;
+        }
 
         return true;
     }

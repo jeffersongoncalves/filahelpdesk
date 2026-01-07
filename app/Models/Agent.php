@@ -95,7 +95,10 @@ class Agent extends Model implements AuthenticatableContract, AuthorizableContra
 
     public function canAccessPanel(Panel $panel): bool
     {
-        if ($panel->getId() === 'agent') {
+        if ($panel->getId() === 'admin') {
+            return false;
+        }
+        if ($panel->getId() === 'app') {
             return false;
         }
 
