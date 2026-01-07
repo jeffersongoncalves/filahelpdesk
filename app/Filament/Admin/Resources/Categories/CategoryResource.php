@@ -62,7 +62,7 @@ class CategoryResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return (string)Cache::rememberForever('categories_count', fn() => Category::query()->count());
+        return (string) Cache::rememberForever('categories_count', fn () => Category::query()->count());
     }
 
     public static function form(Schema $schema): Schema

@@ -62,7 +62,7 @@ class StatusResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return (string)Cache::rememberForever('statuses_count', fn() => Status::query()->count());
+        return (string) Cache::rememberForever('statuses_count', fn () => Status::query()->count());
     }
 
     public static function form(Schema $schema): Schema

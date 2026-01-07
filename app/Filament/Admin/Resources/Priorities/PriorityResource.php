@@ -62,7 +62,7 @@ class PriorityResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return (string)Cache::rememberForever('priorities_count', fn() => Priority::query()->count());
+        return (string) Cache::rememberForever('priorities_count', fn () => Priority::query()->count());
     }
 
     public static function form(Schema $schema): Schema
