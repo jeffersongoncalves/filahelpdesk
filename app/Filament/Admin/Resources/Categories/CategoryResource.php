@@ -9,7 +9,6 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Forms\Components\ColorPicker;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\ColorEntry;
 use Filament\Infolists\Components\TextEntry;
@@ -63,7 +62,7 @@ class CategoryResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return (string) Cache::rememberForever('categories_count', fn () => Category::query()->count());
+        return (string)Cache::rememberForever('categories_count', fn() => Category::query()->count());
     }
 
     public static function form(Schema $schema): Schema
@@ -75,10 +74,6 @@ class CategoryResource extends Resource
                     ->required(),
                 ColorPicker::make('color')
                     ->required(),
-                Select::make('agents')
-                    ->relationship('agents', 'name')
-                    ->multiple()
-                    ->searchable(),
             ]);
     }
 
@@ -89,7 +84,6 @@ class CategoryResource extends Resource
             ->components([
                 TextEntry::make('name'),
                 ColorEntry::make('color'),
-                TextEntry::make('agents'),
             ]);
     }
 
