@@ -12,6 +12,7 @@ use Filament\Infolists;
 use Filament\Notifications;
 use Filament\Pages;
 use Filament\Schemas;
+use Filament\Support\Enums\Alignment;
 use Filament\Support\Enums\Width;
 use Filament\Support\Facades\FilamentView;
 use Filament\Support\Icons\Heroicon;
@@ -62,6 +63,8 @@ class AppServiceProvider extends ServiceProvider
         }
 
         Model::automaticallyEagerLoadRelationships();
+
+        Notifications\Livewire\Notifications::alignment(Alignment::Center);
 
         $this->configureActions();
         $this->configureSchema();

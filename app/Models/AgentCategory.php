@@ -23,7 +23,7 @@ class AgentCategory extends Pivot
 {
     protected $fillable = [
         'category_id',
-        'Agent_id',
+        'agent_id',
     ];
 
     public function category(): BelongsTo

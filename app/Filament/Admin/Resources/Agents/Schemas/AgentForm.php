@@ -2,6 +2,7 @@
 
 namespace App\Filament\Admin\Resources\Agents\Schemas;
 
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
@@ -36,6 +37,10 @@ class AgentForm
                             ->required(fn (string $context): bool => $context === 'create')
                             ->dehydrated(fn ($state) => filled($state))
                             ->minLength(6),
+                        Select::make('categories')
+                            ->relationship('categories', 'name')
+                            ->multiple()
+                            ->searchable(),
                     ]),
             ]);
     }

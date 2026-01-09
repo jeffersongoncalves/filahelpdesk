@@ -89,7 +89,7 @@ class Agent extends Model implements AuthenticatableContract, AuthorizableContra
 
     public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(User::class)
+        return $this->belongsToMany(Category::class)
             ->using(AgentCategory::class);
     }
 

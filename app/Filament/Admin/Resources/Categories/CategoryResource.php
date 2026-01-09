@@ -9,6 +9,7 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Forms\Components\ColorPicker;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\ColorEntry;
 use Filament\Infolists\Components\TextEntry;
@@ -74,6 +75,10 @@ class CategoryResource extends Resource
                     ->required(),
                 ColorPicker::make('color')
                     ->required(),
+                Select::make('agents')
+                    ->relationship('agents', 'name')
+                    ->multiple()
+                    ->searchable(),
             ]);
     }
 
@@ -84,6 +89,7 @@ class CategoryResource extends Resource
             ->components([
                 TextEntry::make('name'),
                 ColorEntry::make('color'),
+                TextEntry::make('agents'),
             ]);
     }
 

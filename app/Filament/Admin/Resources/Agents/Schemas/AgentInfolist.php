@@ -26,6 +26,7 @@ class AgentInfolist
                             ->copyable()
                             ->copyMessage('Email copied successfully!')
                             ->copyMessageDuration(1500),
+                        TextEntry::make('categories'),
                     ]),
                 AdditionalInformation::make([
                     'created_at',
